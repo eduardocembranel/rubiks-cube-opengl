@@ -1,0 +1,8 @@
+/home/eduardo/Documents/opengl_shits/learn2/arcball10/opengl_base/build/CMakeFiles/rebuild_cache.dir
+/home/eduardo/Documents/opengl_shits/learn2/arcball10/opengl_base/build/CMakeFiles/edit_cache.dir
+/home/eduardo/Documents/opengl_shits/learn2/arcball10/opengl_base/build/CMakeFiles/proj.dir
+/home/eduardo/Documents/opengl_shits/learn2/arcball10/opengl_base/build/glfw/CMakeFiles/rebuild_cache.dir
+/home/eduardo/Documents/opengl_shits/learn2/arcball10/opengl_base/build/glfw/CMakeFiles/edit_cache.dir
+/home/eduardo/Documents/opengl_shits/learn2/arcball10/opengl_base/build/glfw/src/CMakeFiles/rebuild_cache.dir
+/home/eduardo/Documents/opengl_shits/learn2/arcball10/opengl_base/build/glfw/src/CMakeFiles/edit_cache.dir
+/home/eduardo/Documents/opengl_shits/learn2/arcball10/opengl_base/build/glfw/src/CMakeFiles/glfw.dir
