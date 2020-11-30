@@ -13,6 +13,8 @@
 #include <transformCube.hpp>
 #include <rubiksCubeView.hpp>
 
+#include <shader.h>
+
 class WindowWrapper {
     public:
         WindowWrapper(int, int, const std::string &);
@@ -23,6 +25,8 @@ class WindowWrapper {
         int height;
         int lastX;
         int lastY;
+
+        void render(const Shader &);
 
         void processInputs();
 
@@ -37,6 +41,7 @@ class WindowWrapper {
         static void windowSizeCallback(GLFWwindow *, int, int);
         static void mouseButtonCallback(GLFWwindow *, int, int, int);    
         static void scrollCallback(GLFWwindow *, double, double);
+        static void keyCallback(GLFWwindow *, int, int, int, int);
 };
 
 #endif //!WINDOW_WRAPPER_HPP

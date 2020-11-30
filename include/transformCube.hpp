@@ -13,6 +13,7 @@ class TransformCube {
     public:
         TransformCube(int, int);
         void updateProjection(int, int);
+        void updateModel();
         void updateScale(int);
 
         glm::mat4 getModel() const;

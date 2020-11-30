@@ -7,10 +7,13 @@
 
 #include <material.hpp>
 
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
+
 //a: lower bottom vertice
 //b: upper top vertice
 CubieView::CubieView(glm::vec3 a, glm::vec3 b, float edgeRadius,
-        const Material &material) {
+        const Material &material) : model(1.0f) {
 
     size = fabs(a.x - b.x);
     glm::vec3 aa = a + edgeRadius;
@@ -163,6 +166,8 @@ void CubieView::loadToBuffer() {
 }
 
 void CubieView::draw(const Shader &shader) {
+    shader.setMat4("cubieRotate", model);
+
     for(int i = 0; i < corners.size(); ++i) {
         corners[i].draw(shader);
     }
@@ -258,4 +263,15 @@ void CubieView::rotate(glm::vec3 rotAxis, float rotAngle) {
     for(int i = 0; i < stickers.size(); ++i) {
         stickers[i].rotate(rotAxis, rotAngle);
     }
+}
+
+void CubieView::rotateModel(glm::vec3 rotAxis, float rotAngle) {
+    glm::quat q = glm::angleAxis(rotAngle, glm::normalize(rotAxis));
+    glm::mat4 rot = glm::toMat4(q);
+
+    model = rot * model;
+}
+
+glm::mat4 CubieView::getModel() const {
+    return model;
 }

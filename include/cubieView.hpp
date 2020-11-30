@@ -27,7 +27,12 @@ class CubieView {
         void loadToBuffer();
         void draw(const Shader &);
 
+        void rotateModel(glm::vec3, float);
+        glm::mat4 getModel() const;
+
     private:
+        glm::mat4 model;
+
         std::vector<Cylinder> edges;
         std::vector<Sphere> corners;
         std::vector<Square> faces;

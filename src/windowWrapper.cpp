@@ -49,6 +49,19 @@ WindowWrapper::WindowWrapper(int width, int height, const std::string &winTittle
     glfwSetMouseButtonCallback(window, mouseButtonCallback);
     glfwSetWindowSizeCallback(window, windowSizeCallback);
     glfwSetScrollCallback(window, scrollCallback);
+    glfwSetKeyCallback(window, keyCallback);
+}
+
+void WindowWrapper::render(const Shader &shader) {
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
+
+    if (cube->rotManager.rotating) {
+        float angle = cube->rotManager.rotateAnimated();
+        cube->updateModels2(cube->rotManager.face, cube->rotManager.opt, angle);
+    }
+
+    cube->draw(shader);
 }
 
 void WindowWrapper::windowSizeCallback(GLFWwindow *window, int width, int height) {
@@ -77,7 +90,9 @@ void WindowWrapper::mouseCallback(GLFWwindow* window, double currX, double currY
     WindowWrapper *w = static_cast<WindowWrapper *>(data);    
 
     if (w->cube->transformCube.arcball.animating) {
-        w->cube->transformCube.arcball.rotate(currX, currY, w->lastX, w->lastY, w->width, w->height);
+        w->cube->transformCube.arcball.rotate(currX, currY, 
+                w->lastX, w->lastY, w->width, w->height);
+        w->cube->transformCube.updateModel();
     }
 
     w->lastX = currX;
@@ -94,6 +109,28 @@ void WindowWrapper::scrollCallback(GLFWwindow *window, double xOff, double yOff)
     WindowWrapper *w = static_cast<WindowWrapper *>(data);
     
     w->cube->transformCube.updateScale(yOff);
+}
+
+void WindowWrapper::keyCallback(GLFWwindow *window, int key, int scancode, int action,
+        int mods) {
+    void *data = glfwGetWindowUserPointer(window);
+    WindowWrapper *w = static_cast<WindowWrapper *>(data);
+
+    auto &rotManager = w->cube->rotManager;
+
+    if (key == GLFW_KEY_F && action == GLFW_PRESS) {
+        if (!rotManager.rotating) {
+            w->cube->rotManager.rotating = true;
+            w->cube->updateFaces(0, 0);
+            w->cube->rotManager.beginRotate(0, 0);
+        }
+    } else if (key == GLFW_KEY_B && action == GLFW_PRESS) {
+        if (!rotManager.rotating) {
+            w->cube->rotManager.rotating = true;
+            w->cube->updateFaces(1, 0);
+            w->cube->rotManager.beginRotate(1, 0);
+        }
+    }
 }
 
 void WindowWrapper::processInputs() {

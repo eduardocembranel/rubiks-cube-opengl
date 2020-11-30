@@ -65,5 +65,4 @@ void main()
     vec3 specular = getSpecular(spec);
 
     FragColor = vec4(ambient + diffuse + specular, 1.0);
-
 }

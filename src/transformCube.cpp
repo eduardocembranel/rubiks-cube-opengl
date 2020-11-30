@@ -1,21 +1,22 @@
 #include <transformCube.hpp>
 
 TransformCube::TransformCube(int width, int height) : arcball(0.4f) {
-    updateProjection(width, height);
-
+    //create view matrix
     cameraPos = glm::vec3(0.0f, 0.0f, 4.0f);
     glm::vec3 origin(0.0f, 0.0f, 0.0f);
     glm::vec3 xAxis(1.0f, 0.0f, 0.0f);
     glm::vec3 yAxis(0.0f, 1.0f, 0.0f);
-
     view = glm::lookAt(cameraPos, origin, yAxis);
 
+    //create model matrix
     glm::quat q1 = glm::angleAxis(glm::radians(-45.0f), yAxis);
     glm::quat q2 = glm::angleAxis(glm::radians(45.0f), xAxis);
-
     rotate = glm::toMat4(q2) * glm::toMat4(q1);
     scale  = glm::vec3(1.0f, 1.0f, 1.0f);
-    model  = glm::scale(rotate, scale);
+    updateModel();
+
+    //create projection matrix
+    updateProjection(width, height);
 }
 
 void TransformCube::updateProjection(int width, int height) {
@@ -28,10 +29,15 @@ void TransformCube::updateScale(int opt) {
         scale.x += (opt * 0.1);
         scale.y += (opt * 0.1);
         scale.z += (opt * 0.1);
-        model = glm::scale(rotate, scale);
     }
 
     arcball.setRadius(scale.x/2.0f);
+
+    updateModel();
+}
+
+void TransformCube::updateModel() {
+    model = arcball.getRotation() * glm::scale(rotate, scale);
 }
 
 glm::mat4 TransformCube::getModel() const {

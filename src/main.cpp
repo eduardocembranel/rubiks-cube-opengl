@@ -29,11 +29,12 @@
 int main() {
     WindowWrapper w(1920, 1080, "title");  
 
-    Texture teste("../resources/textures/foz.png", GL_RGBA);
-    Texture teste2("../resources/textures/pti.png", GL_RGBA);
-    Texture teste3("../resources/textures/itaipu.png", GL_RGBA);
-    Texture teste4("../resources/textures/unioeste.png", GL_RGBA);
-    Texture teste5("../resources/textures/parana.png", GL_RGBA);
+    //Texture teste("../resources/textures/foz.png", GL_RGBA);
+    //Texture teste2("../resources/textures/pti.png", GL_RGBA);
+    //Texture teste3("../resources/textures/itaipu.png", GL_RGBA);
+    //Texture teste4("../resources/textures/unioeste.png", GL_RGBA);
+    //Texture teste5("../resources/textures/parana.png", GL_RGBA);
+    //Texture teste6("../resources/textures/cc.png", GL_RGBA);
 
     Material black(glm::vec3(0.05f), glm::vec3(0.01f, 0.01f, 0.01f), 
             glm::vec3(0.9f), 16.0f);
@@ -114,20 +115,17 @@ int main() {
                 lastTime += 1.0;
         }
 
-        //rendering stuffs
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
-
-        shader.setMat4("arcball", w.cube->transformCube.arcball.getRotation()); 
+        //por enquanto isso vai ficar aqui, mas tem q mudar dps
         shader.setMat4("model",  w.cube->transformCube.getModel());
         shader.setMat4("view",  w.cube->transformCube.getView()); 
         shader.setMat4("projection", w.cube->transformCube.getProjection());
 
-        w.cube->draw(shader);
+        w.render(shader);
 
         w.pollEvents(); 
         w.swapBuffers();
     }
+    
     w.terminate();
     return 0;
 }
